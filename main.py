@@ -39,6 +39,18 @@ if not os.path.exists("uploads"):
     os.makedirs("uploads")
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
+# Health Check
+@app.get("/db-check", tags=["Health Check"])
+async def db_check():
+    try:
+        # Pinging the database to check connection
+        await db.command('ping')
+        print("Create connection successful")
+        return {"status": "success", "message": "Database connection is active"}
+    except Exception as e:
+        print(f"Database connection failed: {e}")
+        return {"status": "error", "message": f"Database connection failed: {str(e)}"}
+
 # Startup event for indexes
 @app.on_event("startup")
 async def startup_event():
