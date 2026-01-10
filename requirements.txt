@@ -5,7 +5,8 @@ motor
 pydantic
 pydantic[email]
 python-jose
-passlib[bcrypt]
+passlib
+bcrypt
 python-multipart
 dnspython
 requests

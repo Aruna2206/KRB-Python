@@ -45,8 +45,9 @@ def require_role(required_role: Role):
 def verify_password(plain_password, hashed_password):
     try:
         return pwd_context.verify(plain_password, hashed_password)
-    except Exception:
+    except Exception as e:
         # Fallback for plain text passwords
+        print(f"Password verification error: {e}")
         return plain_password == hashed_password
 
 def get_password_hash(password):
