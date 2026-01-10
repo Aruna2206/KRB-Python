@@ -1,0 +1,3416 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "UCO CMS API", "version": "1.0.0" },
+  "servers": [
+    { "url": "http://localhost:8000", "description": "Local Server" }
+  ],
+
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login For Access Token",
+        "operationId": "login_for_access_token_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserLogin" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Login For Access Token Api Auth Login Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Refresh Access Token",
+        "operationId": "refresh_access_token_api_auth_refresh_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_refresh_access_token_api_auth_refresh_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Refresh Access Token Api Auth Refresh Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Logout",
+        "operationId": "logout_api_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Logout Api Auth Logout Post"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/auth/change-password": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Change Password",
+        "operationId": "change_password_api_auth_change_password_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_change_password_api_auth_change_password_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Change Password Api Auth Change Password Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/admin/dashboard/stats": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Admin Dashboard Stats",
+        "operationId": "admin_dashboard_stats_api_admin_dashboard_stats_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "month",
+              "title": "Period"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Admin Dashboard Stats Api Admin Dashboard Stats Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/fbos": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get All Fbos",
+        "operationId": "get_all_fbos_api_admin_fbos_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/Status" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Search"
+            }
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "City"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "createdAt",
+              "title": "Sort By"
+            }
+          },
+          {
+            "name": "sort_order",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "desc",
+              "title": "Sort Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_FBO_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/fbos/{fbo_id}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Fbo Details",
+        "operationId": "get_fbo_details_api_admin_fbos__fbo_id__get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "fbo_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Fbo Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FBO" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/fbos/{fbo_id}/status": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Update Fbo Status",
+        "operationId": "update_fbo_status_api_admin_fbos__fbo_id__status_patch",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "fbo_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Fbo Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Status Update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Fbo Status Api Admin Fbos  Fbo Id  Status Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/fbos/{fbo_id}/assign-collector": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Assign Collector To Fbo",
+        "operationId": "assign_collector_to_fbo_api_admin_fbos__fbo_id__assign_collector_patch",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "fbo_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Fbo Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { "type": "string" },
+                "title": "Collector Data"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Assign Collector To Fbo Api Admin Fbos  Fbo Id  Assign Collector Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/collections": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get All Collections",
+        "operationId": "get_all_collections_api_admin_collections_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/CollectionStatus" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "collector_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Collector Id"
+            }
+          },
+          {
+            "name": "fbo_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Fbo Id"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "collectionDate",
+              "title": "Sort By"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get All Collections Api Admin Collections Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/collections/{collection_id}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Collection Details",
+        "operationId": "get_collection_details_api_admin_collections__collection_id__get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Collection Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Collection" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/collections/{collection_id}/review": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Review Collection",
+        "operationId": "review_collection_api_admin_collections__collection_id__review_patch",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "collection_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Collection Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CollectionReview" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Review Collection Api Admin Collections  Collection Id  Review Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/performance/collectors": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Collector Performance",
+        "operationId": "get_collector_performance_api_admin_performance_collectors_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "month",
+              "title": "Period"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          },
+          {
+            "name": "collector_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Collector Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Collector Performance Api Admin Performance Collectors Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/payments": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Payments",
+        "operationId": "get_payments_api_admin_payments_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/PaymentStatus" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "fbo_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Fbo Id"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Payment_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/payments/process": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Process Payment",
+        "operationId": "process_payment_api_admin_payments_process_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PaymentCreate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Process Payment Api Admin Payments Process Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/admin/payments/{payment_id}/status": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Update Payment Status",
+        "operationId": "update_payment_status_api_admin_payments__payment_id__status_patch",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "payment_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Payment Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PaymentUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Payment Status Api Admin Payments  Payment Id  Status Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/users": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Users",
+        "operationId": "get_users_api_admin_users_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/Role" },
+                { "type": "null" }
+              ],
+              "title": "Role"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/Status" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_UserOut_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Create User",
+        "operationId": "create_user_api_admin_users_post",
+        "security": [{ "HTTPBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserCreate" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Create User Api Admin Users Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/pricing/{pricing_id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update Pricing",
+        "operationId": "update_pricing_api_admin_pricing__pricing_id__put",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "pricing_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Pricing Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PricingCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Pricing Api Admin Pricing  Pricing Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/analytics": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Analytics",
+        "operationId": "get_analytics_api_admin_analytics_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "type_",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "collections",
+              "title": "Type "
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "month",
+              "title": "Period"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Analytics Api Admin Analytics Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/enrollment/dashboard/stats": {
+      "get": {
+        "tags": ["Enrollment Team"],
+        "summary": "Enrollment Dashboard",
+        "operationId": "enrollment_dashboard_api_enrollment_dashboard_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Enrollment Dashboard Api Enrollment Dashboard Stats Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/enrollment/fbos": {
+      "post": {
+        "tags": ["Enrollment Team"],
+        "summary": "Create Fbo",
+        "operationId": "create_fbo_api_enrollment_fbos_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FBOBase" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Create Fbo Api Enrollment Fbos Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/enrollment/fbos/{fbo_id}/documents": {
+      "post": {
+        "tags": ["Enrollment Team"],
+        "summary": "Upload Fbo Documents",
+        "operationId": "upload_fbo_documents_api_enrollment_fbos__fbo_id__documents_post",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "fbo_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Fbo Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_fbo_documents_api_enrollment_fbos__fbo_id__documents_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/enrollment/my-enrollments": {
+      "get": {
+        "tags": ["Enrollment Team"],
+        "summary": "Get My Enrollments",
+        "operationId": "get_my_enrollments_api_enrollment_my_enrollments_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/Status" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_FBO_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/enrollment/fbos/{fbo_id}": {
+      "put": {
+        "tags": ["Enrollment Team"],
+        "summary": "Update Fbo Details",
+        "operationId": "update_fbo_details_api_enrollment_fbos__fbo_id__put",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "fbo_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Fbo Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "title": "Fbo Update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Fbo Details Api Enrollment Fbos  Fbo Id  Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collection/dashboard/stats": {
+      "get": {
+        "tags": ["Collection Team"],
+        "summary": "Collection Dashboard",
+        "operationId": "collection_dashboard_api_collection_dashboard_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Collection Dashboard Api Collection Dashboard Stats Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/collection/assigned-fbos": {
+      "get": {
+        "tags": ["Collection Team"],
+        "summary": "Get Assigned Fbos",
+        "operationId": "get_assigned_fbos_api_collection_assigned_fbos_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/Status" },
+                { "type": "null" }
+              ],
+              "default": "active",
+              "title": "Status"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Search"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Assigned Fbos Api Collection Assigned Fbos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collection/trips/start": {
+      "post": {
+        "tags": ["Collection Team"],
+        "summary": "Start Trip",
+        "operationId": "start_trip_api_collection_trips_start_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TripCreate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Start Trip Api Collection Trips Start Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/collection/collections": {
+      "post": {
+        "tags": ["Collection Team"],
+        "summary": "Add Collection",
+        "operationId": "add_collection_api_collection_collections_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_add_collection_api_collection_collections_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Add Collection Api Collection Collections Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/collection/my-collections": {
+      "get": {
+        "tags": ["Collection Team"],
+        "summary": "Get My Collections",
+        "operationId": "get_my_collections_api_collection_my_collections_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/CollectionStatus" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get My Collections Api Collection My Collections Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collection/trips/{trip_id}/end": {
+      "patch": {
+        "tags": ["Collection Team"],
+        "summary": "End Trip",
+        "operationId": "end_trip_api_collection_trips__trip_id__end_patch",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "trip_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Trip Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TripEnd" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response End Trip Api Collection Trips  Trip Id  End Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collection/trips/{trip_id}": {
+      "get": {
+        "tags": ["Collection Team"],
+        "summary": "Get Trip Details",
+        "operationId": "get_trip_details_api_collection_trips__trip_id__get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "trip_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Trip Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Trip" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/collection/my-trips": {
+      "get": {
+        "tags": ["Collection Team"],
+        "summary": "Get My Trips",
+        "operationId": "get_my_trips_api_collection_my_trips_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                { "$ref": "#/components/schemas/TripStatus" },
+                { "type": "null" }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Trip_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendor/dashboard/stats": {
+      "get": {
+        "tags": ["Vendor/FBO"],
+        "summary": "Vendor Dashboard",
+        "operationId": "vendor_dashboard_api_vendor_dashboard_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Vendor Dashboard Api Vendor Dashboard Stats Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/vendor/collections": {
+      "get": {
+        "tags": ["Vendor/FBO"],
+        "summary": "Get Vendor Collections",
+        "operationId": "get_vendor_collections_api_vendor_collections_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "Start Date"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true,
+              "title": "End Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Collection_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendor/payments": {
+      "get": {
+        "tags": ["Vendor/FBO"],
+        "summary": "Get Vendor Payments",
+        "operationId": "get_vendor_payments_api_vendor_payments_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_Payment_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vendor/profile": {
+      "get": {
+        "tags": ["Vendor/FBO"],
+        "summary": "Get Vendor Profile",
+        "operationId": "get_vendor_profile_api_vendor_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/FBO" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      },
+      "put": {
+        "tags": ["Vendor/FBO"],
+        "summary": "Update Vendor Profile",
+        "operationId": "update_vendor_profile_api_vendor_profile_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Profile Update"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Update Vendor Profile Api Vendor Profile Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/api/vendor/request-collection": {
+      "post": {
+        "tags": ["Vendor/FBO"],
+        "summary": "Request Collection",
+        "operationId": "request_collection_api_vendor_request_collection_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_request_collection_api_vendor_request_collection_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Request Collection Api Vendor Request Collection Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": ["Common/Shared"],
+        "summary": "Get Notifications",
+        "operationId": "get_notifications_notifications_get",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "unread_only",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Unread Only"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Notifications Notifications Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications/{notification_id}/read": {
+      "patch": {
+        "tags": ["Common/Shared"],
+        "summary": "Mark Notification Read",
+        "operationId": "mark_notification_read_notifications__notification_id__read_patch",
+        "security": [{ "HTTPBearer": [] }],
+        "parameters": [
+          {
+            "name": "notification_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Notification Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Mark Notification Read Notifications  Notification Id  Read Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pricing": {
+      "get": {
+        "tags": ["Common/Shared"],
+        "summary": "Get Pricing Info",
+        "operationId": "get_pricing_info_pricing_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get Pricing Info Pricing Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/upload/image": {
+      "post": {
+        "tags": ["Common/Shared"],
+        "summary": "Upload Image",
+        "operationId": "upload_image_upload_image_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_image_upload_image_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "HTTPBearer": [] }]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_add_collection_api_collection_collections_post": {
+        "properties": {
+          "trip_id": {
+            "type": "string",
+            "nullable": true,
+            "title": "Trip Id"
+          },
+          "fbo_id": { "type": "string", "title": "Fbo Id" },
+          "quantity_collected": {
+            "type": "number",
+            "title": "Quantity Collected"
+          },
+          "quality_grade": { "$ref": "#/components/schemas/QualityGrade" },
+          "quality_notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Quality Notes"
+          },
+          "container_type": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/ContainerType" },
+              { "type": "null" }
+            ]
+          },
+          "container_count": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Container Count"
+          },
+          "container_ids": {
+            "type": "string",
+            "nullable": true,
+            "title": "Container Ids"
+          },
+          "latitude": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Longitude"
+          },
+          "images": {
+            "anyOf": [
+              {
+                "items": { "type": "string", "format": "binary" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Images"
+          },
+          "image_types": {
+            "anyOf": [
+              { "items": { "type": "string" }, "type": "array" },
+              { "type": "null" }
+            ],
+            "title": "Image Types"
+          }
+        },
+        "type": "object",
+        "required": ["fbo_id", "quantity_collected", "quality_grade"],
+        "title": "Body_add_collection_api_collection_collections_post"
+      },
+      "Body_change_password_api_auth_change_password_post": {
+        "properties": {
+          "current_password": { "type": "string", "title": "Current Password" },
+          "new_password": { "type": "string", "title": "New Password" }
+        },
+        "type": "object",
+        "required": ["current_password", "new_password"],
+        "title": "Body_change_password_api_auth_change_password_post"
+      },
+      "Body_refresh_access_token_api_auth_refresh_post": {
+        "properties": {
+          "refresh_token_str": {
+            "type": "string",
+            "title": "Refresh Token Str"
+          }
+        },
+        "type": "object",
+        "required": ["refresh_token_str"],
+        "title": "Body_refresh_access_token_api_auth_refresh_post"
+      },
+      "Body_request_collection_api_vendor_request_collection_post": {
+        "properties": {
+          "estimated_quantity": {
+            "type": "number",
+            "title": "Estimated Quantity"
+          },
+          "preferred_date": { "type": "string", "title": "Preferred Date" },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": ["estimated_quantity", "preferred_date"],
+        "title": "Body_request_collection_api_vendor_request_collection_post"
+      },
+      "Body_upload_fbo_documents_api_enrollment_fbos__fbo_id__documents_post": {
+        "properties": {
+          "files": {
+            "items": { "type": "string", "format": "binary" },
+            "type": "array",
+            "title": "Files"
+          },
+          "document_types": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Document Types"
+          }
+        },
+        "type": "object",
+        "required": ["files", "document_types"],
+        "title": "Body_upload_fbo_documents_api_enrollment_fbos__fbo_id__documents_post"
+      },
+      "Body_upload_image_upload_image_post": {
+        "properties": {
+          "file": { "type": "string", "format": "binary", "title": "File" },
+          "type_": { "type": "string", "title": "Type" }
+        },
+        "type": "object",
+        "required": ["file", "type_"],
+        "title": "Body_upload_image_upload_image_post"
+      },
+      "BusinessType": {
+        "type": "string",
+        "enum": [
+          "Restaurant",
+          "Hotel",
+          "Cloud Kitchen",
+          "Mess",
+          "Canteen",
+          "Catering"
+        ],
+        "title": "BusinessType"
+      },
+      "Collection": {
+        "properties": {
+          "fboId": { "type": "string", "title": "Fboid" },
+          "tripId": {
+            "type": "string",
+            "nullable": true,
+            "title": "Tripid"
+          },
+          "quantityCollected": {
+            "type": "number",
+            "title": "Quantitycollected"
+          },
+          "qualityGrade": { "$ref": "#/components/schemas/QualityGrade" },
+          "qualityNotes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Qualitynotes"
+          },
+          "containerType": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/ContainerType" },
+              { "type": "null" }
+            ]
+          },
+          "containerCount": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Containercount"
+          },
+          "containerIds": {
+            "anyOf": [
+              { "items": { "type": "string" }, "type": "array" },
+              { "type": "null" }
+            ],
+            "title": "Containerids"
+          },
+          "latitude": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Longitude"
+          },
+          "collectionId": { "type": "string", "title": "Collectionid" },
+          "fboName": { "type": "string", "title": "Fboname" },
+          "collectorId": { "type": "string", "title": "Collectorid" },
+          "collectorName": { "type": "string", "title": "Collectorname" },
+          "collectionDate": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Collectiondate"
+          },
+          "pricePerKg": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Priceperkg"
+          },
+          "totalAmount": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Totalamount"
+          },
+          "images": {
+            "anyOf": [
+              {
+                "items": { "$ref": "#/components/schemas/CollectionImage" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Images",
+            "default": []
+          },
+          "location": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/CollectionLocation" },
+              { "type": "null" }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "title": "Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CollectionStatus",
+            "default": "pending"
+          },
+          "approvedBy": {
+            "type": "string",
+            "nullable": true,
+            "title": "Approvedby"
+          },
+          "approvedAt": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Approvedat"
+          },
+          "paymentDetails": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/PaymentDetails" },
+              { "type": "null" }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fboId",
+          "quantityCollected",
+          "qualityGrade",
+          "collectionId",
+          "fboName",
+          "collectorId",
+          "collectorName"
+        ],
+        "title": "Collection"
+      },
+      "CollectionFrequency": {
+        "type": "string",
+        "enum": ["weekly", "bi-weekly", "monthly"],
+        "title": "CollectionFrequency"
+      },
+      "CollectionImage": {
+        "properties": {
+          "type": { "type": "string", "title": "Type" },
+          "url": { "type": "string", "title": "Url" },
+          "uploadedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Uploadedat"
+          }
+        },
+        "type": "object",
+        "required": ["type", "url"],
+        "title": "CollectionImage"
+      },
+      "CollectionLocation": {
+        "properties": {
+          "latitude": { "type": "number", "title": "Latitude" },
+          "longitude": { "type": "number", "title": "Longitude" },
+          "address": { "type": "string", "title": "Address" }
+        },
+        "type": "object",
+        "required": ["latitude", "longitude", "address"],
+        "title": "CollectionLocation"
+      },
+      "CollectionReview": {
+        "properties": {
+          "action": { "type": "string", "title": "Action" },
+          "qualityGrade": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/QualityGrade" },
+              { "type": "null" }
+            ]
+          },
+          "pricePerKg": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Priceperkg"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": ["action"],
+        "title": "CollectionReview"
+      },
+      "CollectionStatus": {
+        "type": "string",
+        "enum": ["pending", "approved", "rejected", "paid"],
+        "title": "CollectionStatus"
+      },
+      "ContainerType": {
+        "type": "string",
+        "enum": ["Drum", "Jerry Can", "IBC Tank"],
+        "title": "ContainerType"
+      },
+      "FBO": {
+        "properties": {
+          "businessName": { "type": "string", "title": "Businessname" },
+          "contactPerson": { "$ref": "#/components/schemas/FBOContact" },
+          "address": { "$ref": "#/components/schemas/FBOAddress" },
+          "businessDetails": {
+            "$ref": "#/components/schemas/FBOBusinessDetails"
+          },
+          "oilDetails": { "$ref": "#/components/schemas/FBOOilDetails" },
+          "bankDetails": { "$ref": "#/components/schemas/FBOBankDetails" },
+          "documents": {
+            "anyOf": [
+              {
+                "items": { "$ref": "#/components/schemas/FBODocument" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Documents",
+            "default": []
+          },
+          "fboId": { "type": "string", "title": "Fboid" },
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "title": "Id"
+          },
+          "enrollmentDetails": {
+            "$ref": "#/components/schemas/FBOEnrollmentDetails"
+          },
+          "assignedCollector": {
+            "type": "string",
+            "nullable": true,
+            "title": "Assignedcollector"
+          },
+          "lastCollectionDate": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Lastcollectiondate"
+          },
+          "totalCollections": {
+            "type": "integer",
+            "title": "Totalcollections",
+            "default": 0
+          },
+          "totalQuantityCollected": {
+            "type": "number",
+            "title": "Totalquantitycollected",
+            "default": 0.0
+          },
+          "totalAmountPaid": {
+            "type": "number",
+            "title": "Totalamountpaid",
+            "default": 0.0
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "pending"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "businessName",
+          "contactPerson",
+          "address",
+          "businessDetails",
+          "oilDetails",
+          "bankDetails",
+          "fboId",
+          "enrollmentDetails"
+        ],
+        "title": "FBO"
+      },
+      "FBOAddress": {
+        "properties": {
+          "street": { "type": "string", "title": "Street" },
+          "area": { "type": "string", "title": "Area" },
+          "city": { "type": "string", "title": "City" },
+          "state": { "type": "string", "title": "State" },
+          "pincode": { "type": "string", "title": "Pincode" },
+          "landmark": {
+            "type": "string",
+            "nullable": true,
+            "title": "Landmark"
+          },
+          "latitude": { "type": "number", "title": "Latitude" },
+          "longitude": { "type": "number", "title": "Longitude" }
+        },
+        "type": "object",
+        "required": [
+          "street",
+          "area",
+          "city",
+          "state",
+          "pincode",
+          "latitude",
+          "longitude"
+        ],
+        "title": "FBOAddress"
+      },
+      "FBOBankDetails": {
+        "properties": {
+          "accountHolderName": {
+            "type": "string",
+            "title": "Accountholdername"
+          },
+          "accountNumber": { "type": "string", "title": "Accountnumber" },
+          "bankName": { "type": "string", "title": "Bankname" },
+          "ifscCode": { "type": "string", "title": "Ifsccode" },
+          "branch": { "type": "string", "title": "Branch" },
+          "accountType": {
+            "type": "string",
+            "title": "Accounttype",
+            "default": "Current"
+          }
+        },
+        "type": "object",
+        "required": [
+          "accountHolderName",
+          "accountNumber",
+          "bankName",
+          "ifscCode",
+          "branch"
+        ],
+        "title": "FBOBankDetails"
+      },
+      "FBOBase": {
+        "properties": {
+          "businessName": { "type": "string", "title": "Businessname" },
+          "contactPerson": { "$ref": "#/components/schemas/FBOContact" },
+          "address": { "$ref": "#/components/schemas/FBOAddress" },
+          "businessDetails": {
+            "$ref": "#/components/schemas/FBOBusinessDetails"
+          },
+          "oilDetails": { "$ref": "#/components/schemas/FBOOilDetails" },
+          "bankDetails": { "$ref": "#/components/schemas/FBOBankDetails" },
+          "documents": {
+            "anyOf": [
+              {
+                "items": { "$ref": "#/components/schemas/FBODocument" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Documents",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "businessName",
+          "contactPerson",
+          "address",
+          "businessDetails",
+          "oilDetails",
+          "bankDetails"
+        ],
+        "title": "FBOBase"
+      },
+      "FBOBusinessDetails": {
+        "properties": {
+          "type": { "$ref": "#/components/schemas/BusinessType" },
+          "gstNumber": { "type": "string", "title": "Gstnumber" },
+          "fssaiNumber": { "type": "string", "title": "Fssainumber" },
+          "panNumber": { "type": "string", "title": "Pannumber" },
+          "establishmentYear": {
+            "type": "integer",
+            "title": "Establishmentyear"
+          },
+          "seatingCapacity": { "type": "integer", "title": "Seatingcapacity" },
+          "avgDailyFootfall": { "type": "integer", "title": "Avgdailyfootfall" }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "gstNumber",
+          "fssaiNumber",
+          "panNumber",
+          "establishmentYear",
+          "seatingCapacity",
+          "avgDailyFootfall"
+        ],
+        "title": "FBOBusinessDetails"
+      },
+      "FBOContact": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "designation": { "type": "string", "title": "Designation" },
+          "phone": { "type": "string", "title": "Phone" },
+          "alternatePhone": {
+            "type": "string",
+            "nullable": true,
+            "title": "Alternatephone"
+          },
+          "email": { "type": "string", "format": "email", "title": "Email" }
+        },
+        "type": "object",
+        "required": ["name", "designation", "phone", "email"],
+        "title": "FBOContact"
+      },
+      "FBODocument": {
+        "properties": {
+          "type": { "type": "string", "title": "Type" },
+          "url": { "type": "string", "title": "Url" },
+          "uploadedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Uploadedat"
+          }
+        },
+        "type": "object",
+        "required": ["type", "url"],
+        "title": "FBODocument"
+      },
+      "FBOEnrollmentDetails": {
+        "properties": {
+          "enrolledBy": { "type": "string", "title": "Enrolledby" },
+          "enrolledAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Enrolledat"
+          },
+          "verifiedBy": {
+            "type": "string",
+            "nullable": true,
+            "title": "Verifiedby"
+          },
+          "verifiedAt": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Verifiedat"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "pending"
+          }
+        },
+        "type": "object",
+        "required": ["enrolledBy"],
+        "title": "FBOEnrollmentDetails"
+      },
+      "FBOOilDetails": {
+        "properties": {
+          "estimatedMonthlyUCO": {
+            "type": "number",
+            "title": "Estimatedmonthlyuco"
+          },
+          "currentStorage": {
+            "type": "string",
+            "title": "Currentstorage",
+            "default": "Plastic Drums"
+          },
+          "storageCapacity": { "type": "number", "title": "Storagecapacity" },
+          "collectionFrequency": {
+            "$ref": "#/components/schemas/CollectionFrequency"
+          }
+        },
+        "type": "object",
+        "required": [
+          "estimatedMonthlyUCO",
+          "storageCapacity",
+          "collectionFrequency"
+        ],
+        "title": "FBOOilDetails"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PaginatedResponse_Collection_": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/Collection" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Pagination",
+            "default": {
+              "currentPage": 1,
+              "totalPages": 0,
+              "totalRecords": 0,
+              "limit": 20,
+              "hasNext": false,
+              "hasPrevious": false
+            }
+          }
+        },
+        "type": "object",
+        "required": ["data"],
+        "title": "PaginatedResponse[Collection]"
+      },
+      "PaginatedResponse_FBO_": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/FBO" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Pagination",
+            "default": {
+              "currentPage": 1,
+              "totalPages": 0,
+              "totalRecords": 0,
+              "limit": 20,
+              "hasNext": false,
+              "hasPrevious": false
+            }
+          }
+        },
+        "type": "object",
+        "required": ["data"],
+        "title": "PaginatedResponse[FBO]"
+      },
+      "PaginatedResponse_Payment_": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/Payment" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Pagination",
+            "default": {
+              "currentPage": 1,
+              "totalPages": 0,
+              "totalRecords": 0,
+              "limit": 20,
+              "hasNext": false,
+              "hasPrevious": false
+            }
+          }
+        },
+        "type": "object",
+        "required": ["data"],
+        "title": "PaginatedResponse[Payment]"
+      },
+      "PaginatedResponse_Trip_": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/Trip" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Pagination",
+            "default": {
+              "currentPage": 1,
+              "totalPages": 0,
+              "totalRecords": 0,
+              "limit": 20,
+              "hasNext": false,
+              "hasPrevious": false
+            }
+          }
+        },
+        "type": "object",
+        "required": ["data"],
+        "title": "PaginatedResponse[Trip]"
+      },
+      "PaginatedResponse_UserOut_": {
+        "properties": {
+          "data": {
+            "items": { "$ref": "#/components/schemas/UserOut" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Pagination",
+            "default": {
+              "currentPage": 1,
+              "totalPages": 0,
+              "totalRecords": 0,
+              "limit": 20,
+              "hasNext": false,
+              "hasPrevious": false
+            }
+          }
+        },
+        "type": "object",
+        "required": ["data"],
+        "title": "PaginatedResponse[UserOut]"
+      },
+      "Payment": {
+        "properties": {
+          "fboId": { "type": "string", "title": "Fboid" },
+          "billingPeriod": {
+            "$ref": "#/components/schemas/PaymentBillingPeriod"
+          },
+          "collectionIds": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Collectionids"
+          },
+          "paymentMethod": { "$ref": "#/components/schemas/PaymentMethod" },
+          "deductions": {
+            "anyOf": [
+              {
+                "items": { "$ref": "#/components/schemas/PaymentDeduction" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Deductions"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Notes"
+          },
+          "paymentId": { "type": "string", "title": "Paymentid" },
+          "fboName": { "type": "string", "title": "Fboname" },
+          "totalQuantity": { "type": "number", "title": "Totalquantity" },
+          "averagePricePerKg": {
+            "type": "number",
+            "title": "Averagepriceperkg"
+          },
+          "totalAmount": { "type": "number", "title": "Totalamount" },
+          "netAmount": { "type": "number", "title": "Netamount" },
+          "transactionReference": {
+            "type": "string",
+            "nullable": true,
+            "title": "Transactionreference"
+          },
+          "paymentDate": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Paymentdate"
+          },
+          "bankDetails": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/FBOBankDetails" },
+              { "type": "null" }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "title": "Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus",
+            "default": "pending"
+          },
+          "processedBy": {
+            "type": "string",
+            "nullable": true,
+            "title": "Processedby"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fboId",
+          "billingPeriod",
+          "collectionIds",
+          "paymentMethod",
+          "paymentId",
+          "fboName",
+          "totalQuantity",
+          "averagePricePerKg",
+          "totalAmount",
+          "netAmount"
+        ],
+        "title": "Payment"
+      },
+      "PaymentBillingPeriod": {
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Startdate"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Enddate"
+          }
+        },
+        "type": "object",
+        "required": ["startDate", "endDate"],
+        "title": "PaymentBillingPeriod"
+      },
+      "PaymentCreate": {
+        "properties": {
+          "fboId": { "type": "string", "title": "Fboid" },
+          "billingPeriod": {
+            "$ref": "#/components/schemas/PaymentBillingPeriod"
+          },
+          "collectionIds": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Collectionids"
+          },
+          "paymentMethod": { "$ref": "#/components/schemas/PaymentMethod" },
+          "deductions": {
+            "anyOf": [
+              {
+                "items": { "$ref": "#/components/schemas/PaymentDeduction" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Deductions"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fboId",
+          "billingPeriod",
+          "collectionIds",
+          "paymentMethod"
+        ],
+        "title": "PaymentCreate"
+      },
+      "PaymentDeduction": {
+        "properties": {
+          "type": { "type": "string", "title": "Type" },
+          "amount": { "type": "number", "title": "Amount" },
+          "reason": { "type": "string", "title": "Reason" }
+        },
+        "type": "object",
+        "required": ["type", "amount", "reason"],
+        "title": "PaymentDeduction"
+      },
+      "PaymentDetails": {
+        "properties": {
+          "paymentId": { "type": "string", "title": "Paymentid" },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Paymentdate"
+          },
+          "paymentMethod": { "$ref": "#/components/schemas/PaymentMethod" },
+          "transactionReference": {
+            "type": "string",
+            "title": "Transactionreference"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus",
+            "default": "pending"
+          }
+        },
+        "type": "object",
+        "required": [
+          "paymentId",
+          "paymentDate",
+          "paymentMethod",
+          "transactionReference"
+        ],
+        "title": "PaymentDetails"
+      },
+      "PaymentMethod": {
+        "type": "string",
+        "enum": ["Bank Transfer", "UPI", "Cheque"],
+        "title": "PaymentMethod"
+      },
+      "PaymentStatus": {
+        "type": "string",
+        "enum": ["pending", "processing", "completed", "failed"],
+        "title": "PaymentStatus"
+      },
+      "PaymentUpdate": {
+        "properties": {
+          "status": { "$ref": "#/components/schemas/PaymentStatus" },
+          "transactionReference": {
+            "type": "string",
+            "nullable": true,
+            "title": "Transactionreference"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": ["status"],
+        "title": "PaymentUpdate"
+      },
+      "PricingCreate": {
+        "properties": {
+          "qualityGrade": { "$ref": "#/components/schemas/QualityGrade" },
+          "pricePerKg": { "type": "number", "title": "Priceperkg" },
+          "effectiveFrom": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Effectivefrom"
+          },
+          "effectiveTo": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Effectiveto"
+          },
+          "description": { "type": "string", "title": "Description" },
+          "criteria": { "type": "string", "title": "Criteria" }
+        },
+        "type": "object",
+        "required": [
+          "qualityGrade",
+          "pricePerKg",
+          "effectiveFrom",
+          "description",
+          "criteria"
+        ],
+        "title": "PricingCreate"
+      },
+      "QualityGrade": {
+        "type": "string",
+        "enum": ["A", "B", "C", "Rejected"],
+        "title": "QualityGrade"
+      },
+      "Role": {
+        "type": "string",
+        "enum": ["admin", "enrollment_team", "collection_team", "vendor"],
+        "title": "Role"
+      },
+      "Status": {
+        "type": "string",
+        "enum": ["active", "inactive", "suspended", "pending", "verified"],
+        "title": "Status"
+      },
+      "Trip": {
+        "properties": {
+          "vehicleNumber": { "type": "string", "title": "Vehiclenumber" },
+          "startOdometer": { "type": "number", "title": "Startodometer" },
+          "plannedFBOs": {
+            "items": { "$ref": "#/components/schemas/TripPlannedFBO" },
+            "type": "array",
+            "title": "Plannedfbos"
+          },
+          "tripId": { "type": "string", "title": "Tripid" },
+          "collectorId": { "type": "string", "title": "Collectorid" },
+          "collectorName": { "type": "string", "title": "Collectorname" },
+          "tripDate": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Tripdate"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Starttime"
+          },
+          "endTime": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Endtime"
+          },
+          "endOdometer": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Endodometer"
+          },
+          "totalKmTraveled": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Totalkmtraveled"
+          },
+          "completedCollections": {
+            "items": { "$ref": "#/components/schemas/TripCompletedCollection" },
+            "type": "array",
+            "title": "Completedcollections",
+            "default": []
+          },
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "title": "Id"
+          },
+          "totalQuantityCollected": {
+            "type": "number",
+            "title": "Totalquantitycollected",
+            "default": 0.0
+          },
+          "status": {
+            "$ref": "#/components/schemas/TripStatus",
+            "default": "planned"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vehicleNumber",
+          "startOdometer",
+          "plannedFBOs",
+          "tripId",
+          "collectorId",
+          "collectorName"
+        ],
+        "title": "Trip"
+      },
+      "TripCompletedCollection": {
+        "properties": {
+          "collectionId": { "type": "string", "title": "Collectionid" },
+          "fboId": { "type": "string", "title": "Fboid" },
+          "quantityCollected": {
+            "type": "number",
+            "title": "Quantitycollected"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Completedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "collectionId",
+          "fboId",
+          "quantityCollected",
+          "completedAt"
+        ],
+        "title": "TripCompletedCollection"
+      },
+      "TripCreate": {
+        "properties": {
+          "vehicleNumber": { "type": "string", "title": "Vehiclenumber" },
+          "startOdometer": { "type": "number", "title": "Startodometer" },
+          "plannedFBOs": {
+            "items": { "$ref": "#/components/schemas/TripPlannedFBO" },
+            "type": "array",
+            "title": "Plannedfbos"
+          }
+        },
+        "type": "object",
+        "required": ["vehicleNumber", "startOdometer", "plannedFBOs"],
+        "title": "TripCreate"
+      },
+      "TripEnd": {
+        "properties": {
+          "endOdometer": { "type": "number", "title": "Endodometer" },
+          "notes": {
+            "type": "string",
+            "nullable": true,
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": ["endOdometer"],
+        "title": "TripEnd"
+      },
+      "TripPlannedFBO": {
+        "properties": {
+          "fboId": { "type": "string", "title": "Fboid" },
+          "fboName": { "type": "string", "title": "Fboname" },
+          "address": { "type": "string", "title": "Address" },
+          "estimatedQuantity": {
+            "type": "number",
+            "title": "Estimatedquantity"
+          },
+          "sequence": { "type": "integer", "title": "Sequence" }
+        },
+        "type": "object",
+        "required": [
+          "fboId",
+          "fboName",
+          "address",
+          "estimatedQuantity",
+          "sequence"
+        ],
+        "title": "TripPlannedFBO"
+      },
+      "TripStatus": {
+        "type": "string",
+        "enum": ["planned", "in_progress", "completed", "cancelled"],
+        "title": "TripStatus"
+      },
+      "UserCreate": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "phone": { "type": "string", "title": "Phone" },
+          "role": { "$ref": "#/components/schemas/Role" },
+          "status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "active"
+          },
+          "employeeId": {
+            "type": "string",
+            "nullable": true,
+            "title": "Employeeid"
+          },
+          "profileImage": {
+            "type": "string",
+            "nullable": true,
+            "title": "Profileimage"
+          },
+          "permissions": {
+            "anyOf": [
+              { "items": { "type": "string" }, "type": "array" },
+              { "type": "null" }
+            ],
+            "title": "Permissions",
+            "default": []
+          },
+          "metadata": {
+            "anyOf": [
+              { "additionalProperties": true, "type": "object" },
+              { "type": "null" }
+            ],
+            "title": "Metadata",
+            "default": {}
+          },
+          "password": { "type": "string", "title": "Password" }
+        },
+        "type": "object",
+        "required": ["name", "email", "phone", "role", "password"],
+        "title": "UserCreate"
+      },
+      "UserLogin": {
+        "properties": {
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "password": { "type": "string", "title": "Password" },
+          "role": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/Role" },
+              { "type": "null" }
+            ]
+          }
+        },
+        "type": "object",
+        "required": ["email", "password"],
+        "title": "UserLogin"
+      },
+      "UserOut": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "email": { "type": "string", "format": "email", "title": "Email" },
+          "phone": { "type": "string", "title": "Phone" },
+          "role": { "$ref": "#/components/schemas/Role" },
+          "status": {
+            "$ref": "#/components/schemas/Status",
+            "default": "active"
+          },
+          "employeeId": {
+            "type": "string",
+            "nullable": true,
+            "title": "Employeeid"
+          },
+          "profileImage": {
+            "type": "string",
+            "nullable": true,
+            "title": "Profileimage"
+          },
+          "permissions": {
+            "anyOf": [
+              { "items": { "type": "string" }, "type": "array" },
+              { "type": "null" }
+            ],
+            "title": "Permissions",
+            "default": []
+          },
+          "metadata": {
+            "anyOf": [
+              { "additionalProperties": true, "type": "object" },
+              { "type": "null" }
+            ],
+            "title": "Metadata",
+            "default": {}
+          },
+          "userId": { "type": "string", "title": "Userid" },
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "title": "Id"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          },
+          "lastLogin": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Lastlogin"
+          }
+        },
+        "type": "object",
+        "required": ["name", "email", "phone", "role", "userId"],
+        "title": "UserOut"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": { "HTTPBearer": { "type": "http", "scheme": "bearer" } }
+  }
+}
