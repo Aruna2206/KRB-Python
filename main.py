@@ -51,6 +51,34 @@ async def db_check():
         print(f"Database connection failed: {e}")
         return {"status": "error", "message": f"Database connection failed: {str(e)}"}
 
+@app.post("/create-initial-admin", tags=["Setup"])
+async def create_initial_admin():
+    existing_admin = await db.users.find_one({"role": Role.ADMIN})
+    if existing_admin:
+        return {"success": False, "message": "Admin user already exists."}
+    
+    # Create default admin
+    admin_data = {
+        "userId": generate_id("USR"),
+        "name": "Super Admin",
+        "email": "admin@krb.com",
+        "phone": "0000000000",
+        "role": Role.ADMIN,
+        "status": Status.ACTIVE,
+        "password": get_password_hash("Admin@123"), # Default password
+        "createdAt": datetime.utcnow(),
+        "updatedAt": datetime.utcnow()
+    }
+    await db.users.insert_one(admin_data)
+    return {
+        "success": True, 
+        "message": "Admin created successfully", 
+        "credentials": {
+            "email": "admin@krb.com",
+            "password": "Admin@123"
+        }
+    }
+
 # Startup event for indexes
 @app.on_event("startup")
 async def startup_event():
