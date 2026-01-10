@@ -79,6 +79,40 @@ async def create_initial_admin():
         }
     }
 
+@app.get("/debug-auth", tags=["Debug"])
+async def debug_auth(email: str = "dinesh@gmail.com", password: str = "Ram@1234"):
+    """
+    Debug route to check if user exists and password matches.
+    WARNING: Remove in production or protect.
+    """
+    try:
+        # Check DB Connection URL (masked)
+        from config import MONGODB_URL
+        masked_url = MONGODB_URL.split("@")[-1] if "@" in MONGODB_URL else "localhost/other"
+        
+        # Find user
+        user = await db.users.find_one({"email": email})
+        if not user:
+            return {
+                "success": False, 
+                "message": "User not found", 
+                "db_connected_to": masked_url
+            }
+        
+        # Check password
+        is_valid = verify_password(password, user["password"])
+        
+        return {
+            "success": True,
+            "message": "User found",
+            "password_valid": is_valid,
+            "user_role": user.get("role"),
+            "user_id": user.get("userId"),
+            "db_connected_to": masked_url
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
 # Startup event for indexes
 @app.on_event("startup")
 async def startup_event():
